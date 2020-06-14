@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register | Book-o-holics!</title>
+  </head>
+  <body>
+    <form action="{{ url_for('login') }}" method="post">
+      <input type="text" name="user_id" value="Username">
+      <br>
+      <input type="password" name="passcode" value="Password">
+      <br>
+      <button>Login</button>
+    </form>
+    <br>
+    <p>{{ message }}</p>
+  </body>
+</html>

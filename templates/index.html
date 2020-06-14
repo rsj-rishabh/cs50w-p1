@@ -5,9 +5,15 @@
     <title>Book-o-holics!</title>
   </head>
   <body>
-    <h1>Get the best book reviews here.</h1>
+    <h1>Book-o-holics</h1>
+    <h3>Get the best book reviews here.</h3>
+
     <p>
-    New to Book-o-holics? <a href="{{ url_for('go_to_register') }}">Register here.</a>
+      <a href="{{ url_for('go_to_login') }}">Login</a>
+    </p>
+
+    <p>
+      New to Book-o-holics? <a href="{{ url_for('go_to_register') }}">Register here.</a>
     </p>
 
     <p>{{ message }}</p>
