@@ -21,12 +21,22 @@ if not os.getenv("DATABASE_URL"):
 engine = create_engine(os.getenv("DATABASE_URL"))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 db.init_app(app)
+
+# Set up session
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+session_user = {}
 
 @app.route("/")
 def index():
-    return render_template('index.html', message='')
+    print( f"{session_user} from Index" )
+    if session_user == {}:
+        return render_template('index.html', message='')
+    else:
+        return render_template('home.html', name=session_user['name'])
 
 @app.route("/register")
 def go_to_register():
@@ -48,19 +58,37 @@ def register():
 
 @app.route("/login")
 def go_to_login():
-    return render_template('login.html', message='')
-
-@app.route("/home", methods=['POST'])
-def login():
-    id = request.form.get('user_id')
-    passcode = request.form.get('passcode')
-    print(id)
-    user = User.query.get(id)
-    print(user)
-    if user is None:
-        return render_template('login.html', message='No such user exists.')
+    print( f"{session_user} from go_to_login" )
+    if session_user=={}:
+        return render_template('login.html', message='')
     else:
-        if user.passcode == passcode:
-            return render_template('home.html', name=user.name)
+        return render_template('home.html', name=session_user['name'])
+
+@app.route("/logout")
+def logout():
+    session_user.pop('user')
+    session_user.pop('name')
+    print( f"{session_user} from logout" )
+    return render_template('logout.html')
+
+@app.route("/home", methods=['POST','GET'])
+def login():
+    if request.method == "POST":
+        id = request.form.get('user_id')
+        passcode = request.form.get('passcode')
+        user = User.query.get(id)
+        if user is None:
+            return render_template('login.html', message='No such user exists.')
         else:
-            return render_template('login.html', message='Invalid user id / passcode.')
+            if user.passcode == passcode:
+                session_user.update({'user':id, 'name':user.name})
+                print( f"{session_user} from Login POST" )
+                return render_template('home.html', name=session_user['name'])
+            else:
+                return render_template('login.html', message='Invalid user id / passcode.')
+    else:
+        print( f"{session_user} from Login GET" )
+        if session_user=={}:
+            return render_template('index.html', message='Please login to enter home.')
+        else:
+            return render_template('home.html', name=session_user['name'])
