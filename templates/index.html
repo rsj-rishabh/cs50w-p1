@@ -1,22 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Book-o-holics!</title>
-  </head>
-  <body>
-    <h1>Book-o-holics</h1>
-    <h3>Get the best book reviews here.</h3>
+{% extends 'layout.html' %}
 
-    <p>
-      <a href="{{ url_for('go_to_login') }}">Login</a>
-    </p>
+{% block body %}
 
-    <p>
-      New to Book-o-holics? <a href="{{ url_for('go_to_register') }}">Register here.</a>
-    </p>
+  <a class='btn btn-primary' href="{{ url_for('go_to_login') }}">Login</a>
 
-    <p>{{ message }}</p>
+  <a class='btn btn-secondary' href="{{ url_for('go_to_register') }}">Register here.</a>
 
-  </body>
-</html>
+{% endblock %}
+
+{% block message %}
+  <p>{{ message }}</p>
+{% endblock %}

@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Book-o-holics | Logout</title>
-  </head>
-  <body>
+{% extends "layout.html" %}
 
+{% block body %}
     <h2 align="center">Auf Weidersehen! Bis bald.</h2>
+{% endblock %}
+
+{% block message %}
     <p align="center">
       <a href="{{ url_for('index') }}">Home</a>
     </p>
-
-  </body>
-</html>
+{% endblock %}

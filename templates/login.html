@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Register | Book-o-holics!</title>
-  </head>
-  <body>
-    <form action="{{ url_for('login') }}" method="post">
+{% extends "layout.html" %}
+
+{% block body %}
+  <form action="{{ url_for('login') }}" method="post">
+    <div class="form-group">
       <input type="text" name="user_id" value="Username">
-      <br>
+    </div>
+
+    <div class="form-group">
       <input type="password" name="passcode" value="Password">
-      <br>
-      <button>Login</button>
-    </form>
-    <br>
-    <p>{{ message }}</p>
-  </body>
-</html>
+    </div>
+
+    <div class="form-group">
+      <button type="submit">Login</button>
+    </div>
+
+  </form>
+{% endblock %}
+
+{% block message %}
+    <p class="alert alert-danger">{{ message }}</p>
+{% endblock %}
